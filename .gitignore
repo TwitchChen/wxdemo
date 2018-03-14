@@ -2,3 +2,4 @@
 venv
 *.pyc
 test/
+config_loc.py

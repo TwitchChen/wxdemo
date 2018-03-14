@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 from flask import Flask
-from config import config,env
+from config_loc import config,env
 from flask_sqlalchemy import SQLAlchemy
 
 """
