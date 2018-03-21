@@ -25,10 +25,12 @@ class Redis(object):
             if r:
                 return True
             else:
-                print("redis error")
+                app.logger.error("redis error,set wx key error")
+               # print("redis error")
                 return False
         except Exception as e:
-            print("log error: %s" % e)
+            app.logger.error("redis connect error: %s" % e)
+           # print("log error: %s" % e)
             return False
 
     def get_from_redis(self, key):
@@ -37,10 +39,12 @@ class Redis(object):
             if r:
                 return r
             else:
-                print("redis error")
+                app.logger.error("get redis wx key error")
+                #print("redis error")
                 return None
         except Exception as e:
-            print("log error %s" % e)
+            app.logger.error("redis connect error: %s" % e)
+            #print("log error %s" % e)
             return None
 
 

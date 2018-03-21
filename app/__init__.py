@@ -3,6 +3,7 @@
 from flask import Flask
 from config_loc import config,env
 from flask_sqlalchemy import SQLAlchemy
+import flask_logger
 
 """
 @author: Twitch Chen
@@ -13,6 +14,7 @@ from flask_sqlalchemy import SQLAlchemy
 #插件
 db = SQLAlchemy()
 
+log = flask_logger.Logger()
 
 def create_app():
     app = Flask(__name__)
@@ -23,6 +25,7 @@ def create_app():
 
     #插件注册
     db.init_app(app)
+    log.init_app(app,config=config[env].LOG_CONFIG)
 
     #app注册
     from app.auth import mod_auth

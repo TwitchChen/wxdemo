@@ -46,6 +46,39 @@ class TestConfig(Config):
     BASE_URL = 'https://api.seniverse.com/v3'
     CITY_ID_API = '/location/search.json'
 
+    #log
+    #log
+    LOG_PATH = '/Users/twitch/workspace/wxdemo/log/demo.log' #log 输出目录，默认当前目录log下
+    LOG_CONFIG = {
+        'version': 1,
+        'formatters': {
+            'default': {'format': '%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s'}
+        },
+        'handlers': {
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'default',
+                'stream': 'ext://sys.stdout'
+            },
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'formatter': 'default',
+                'filename': LOG_PATH,
+                'maxBytes': 1024,
+                'backupCount': 3
+            }
+        },
+        'loggers': {
+            'default': {
+                'level': 'DEBUG',
+                'handlers': ['console', 'file']
+            }
+        },
+        'disable_existing_loggers': False
+    }
+
     DEBUG = True
 
 
