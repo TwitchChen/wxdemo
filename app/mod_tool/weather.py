@@ -5,8 +5,6 @@ import json
 from app import create_app
 from app.common.com_redis import Redis
 
-
-
 """
 @author: Twitch Chen
 @file: weather.py
@@ -14,7 +12,7 @@ from app.common.com_redis import Redis
 """
 
 app = create_app()
-
+redis = Redis()
 
 class GetWeather(object):
     def __init__(self):
@@ -24,11 +22,10 @@ class GetWeather(object):
         self.now_url = app.config["NOW_WEATHER"]
         self.three_url = app.config["THREE_DAY_WEATHER"]
         self.shzs_url = app.config["SHZS"]
-        self.redis = Redis()
 
     def get_city_id(self, city):
         id = ''
-        id = self.redis.get_from_redis(key=city)
+        id = redis.get_from_redis(key=city)
         if id:
             return id
         else:
@@ -42,7 +39,7 @@ class GetWeather(object):
                 r = requests.get(url, params, timeout=(5, 5))
                 if r.status_code == 200:
                     id = (json.loads(r.text))["results"][0]["id"]
-                    self.redis.save_to_redis(key=city, value=id)
+                    redis.save_to_redis(key=city, value=id)
                     return id
             except Exception as e:
                 app.logger.error("get city id error: %s" % e)
@@ -52,12 +49,12 @@ class GetWeather(object):
         if not city:
             return None
         key = "weather_"+city
-        data = self.redis.get_from_redis(key=key)
+        data = redis.get_from_redis(key=key)
         if data:
             return data
         else:
             data = self.get_weather_from_api(city)
-            self.redis.save_to_redis(key=city, value=data)
+            redis.save_to_redis(key=city, value=data)
             return data
 
     def get_weather_from_api(self, city):
