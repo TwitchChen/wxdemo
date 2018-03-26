@@ -28,7 +28,11 @@ def create_app():
     log.init_app(app,config=config[env].LOG_CONFIG)
 
     #app注册
+    #认证模块
     from app.auth import mod_auth
     app.register_blueprint(mod_auth)
+    #小工具
+    from app.mod_tool import mod_tool
+    app.register_blueprint(mod_tool)
 
     return app

@@ -25,14 +25,14 @@ class ProdConfig(Config):
 
 class TestConfig(Config):
 
+    #mysql
     SQLALCHEMY_DATABASE_URI = 'mysql://test:Test123456!@192.168.102.167:3306/test'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     #redis
-    RED_SERVER = '192.168.102.227'
+    RED_SERVER = '127.0.0.1'
     RED_PORT = 6379
     RED_DB = 1
-
 
     #weixin
     TOKEN_URL = 'https://api.weixin.qq.com/cgi-bin/token'
@@ -42,11 +42,13 @@ class TestConfig(Config):
 
     #weather
     WEATHRT_ID = '****'
-    WEATHER_SECRET = '******'
-    BASE_URL = 'https://api.seniverse.com/v3'
-    CITY_ID_API = '/location/search.json'
+    WEATHER_SECRET = '****' #key
+    BASE_URL = 'https://api.seniverse.com/v3' #接口
+    CITY_ID_API = '/location/search.json' #查询城市id
+    NOW_WEATHER = '/weather/now.json' #当前天气
+    THREE_DAY_WEATHER = '/weather/daily.json' #未来三天天气
+    SHZS = 'life/suggestion.json' #生活指数
 
-    #log
     #log
     LOG_PATH = '/Users/twitch/workspace/wxdemo/log/demo.log' #log 输出目录，默认当前目录log下
     LOG_CONFIG = {
