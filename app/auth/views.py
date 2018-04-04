@@ -3,6 +3,7 @@
 
 from . import mod_auth
 from app.auth.get_token import GetWxToken
+from app import create_app
 
 
 """
@@ -11,10 +12,11 @@ from app.auth.get_token import GetWxToken
 @time: 2018-3-2 15:02
 """
 
-token = GetWxToken()
+app = create_app()
+token = GetWxToken(app)
 
 
 @mod_auth.route("/")
 def test():
     t = token.get_token_from_redis()
-    return t
+    return 'ok: %s'%t

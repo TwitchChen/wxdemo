@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 import redis
-from app import create_app
+
 
 """
 @author: Twitch Chen
@@ -9,15 +9,14 @@ from app import create_app
 @time: 2018-3-1 16:44
 """
 
-app = create_app()
-server = app.config["RED_SERVER"]
-port = app.config["RED_PORT"]
-db = app.config["RED_DB"]
-
 
 class Redis(object):
-    def __init__(self):
-        self.conn = redis.Redis(host=server, port=port, db=db)
+    def __init__(self, app):
+        self.server = app.config["RED_SERVER"]
+        self.port = app.config["RED_PORT"]
+        self.db = app.config["RED_DB"]
+        self.conn = redis.Redis(host=self.server, port=self.port, db=self.db)
+        self.app = app
 
     def save_to_redis(self, key=None, value=None, ex=None):
         try:
@@ -25,11 +24,11 @@ class Redis(object):
             if r:
                 return True
             else:
-                app.logger.error("redis error,set wx key error")
+                self.app.logger.error("redis error,set  key error")
                # print("redis error")
                 return False
         except Exception as e:
-            app.logger.error("redis connect error: %s" % e)
+            self.app.logger.error("redis connect error: %s" % e)
            # print("log error: %s" % e)
             return False
 
@@ -39,11 +38,11 @@ class Redis(object):
             if r:
                 return r
             else:
-                app.logger.error("get redis wx key error")
+                self.app.logger.error("get redis  key error")
                 #print("redis error")
                 return None
         except Exception as e:
-            app.logger.error("redis connect error: %s" % e)
+            self.app.logger.error("redis connect error: %s" % e)
             #print("log error %s" % e)
             return None
 
