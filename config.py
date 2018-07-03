@@ -49,8 +49,12 @@ class TestConfig(Config):
     THREE_DAY_WEATHER = '/weather/daily.json' #未来三天天气
     SHZS = 'life/suggestion.json' #生活指数
 
+    #robot
+    ROBOT_URL = 'http://openapi.tuling123.com/openapi/api/v2'
+    ROBOT_APIKEY = '*****'
+
     #log
-    LOG_PATH = '/Users/twitch/workspace/wxdemo/log/demo.log' #log 输出目录，默认当前目录log下
+    LOG_PATH = os.path.dirname(__file__) + '/logs/wx.log' #log 输出目录，默认当前目录log下
     LOG_CONFIG = {
         'version': 1,
         'formatters': {

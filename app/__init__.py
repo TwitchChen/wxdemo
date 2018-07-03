@@ -34,5 +34,8 @@ def create_app():
     #小工具
     from app.mod_tool import mod_tool
     app.register_blueprint(mod_tool)
+    #robot
+    from app.robot import mod_robot
+    app.register_blueprint(mod_robot)
 
     return app
