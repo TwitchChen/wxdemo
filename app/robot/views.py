@@ -15,4 +15,5 @@ robot = Robot(app)
 
 @mod_robot.route('/robot/text', methods = ['GET', 'POST'])
 def get_text():
-    pass
+    print(robot.get_text("hello",'sdfsafsa'))
+    return 'ok'

@@ -54,36 +54,8 @@ class TestConfig(Config):
     ROBOT_APIKEY = '*****'
 
     #log
-    LOG_PATH = os.path.dirname(__file__) + '/logs/wx.log' #log 输出目录，默认当前目录log下
-    LOG_CONFIG = {
-        'version': 1,
-        'formatters': {
-            'default': {'format': '%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s'}
-        },
-        'handlers': {
-            'console': {
-                'level': 'DEBUG',
-                'class': 'logging.StreamHandler',
-                'formatter': 'default',
-                'stream': 'ext://sys.stdout'
-            },
-            'file': {
-                'level': 'DEBUG',
-                'class': 'logging.handlers.RotatingFileHandler',
-                'formatter': 'default',
-                'filename': LOG_PATH,
-                'maxBytes': 1024,
-                'backupCount': 3
-            }
-        },
-        'loggers': {
-            'default': {
-                'level': 'DEBUG',
-                'handlers': ['console', 'file']
-            }
-        },
-        'disable_existing_loggers': False
-    }
+    LOG_PATH = os.path.dirname(__file__) + '/log/wx.log' #log 输出目录，默认当前目录log下
+    LOG_LEVEL = 'DEBUG'
 
     DEBUG = True
 

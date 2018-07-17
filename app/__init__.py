@@ -3,7 +3,7 @@
 from flask import Flask
 from config_loc import config,env
 from flask_sqlalchemy import SQLAlchemy
-import flask_logger
+import logging
 
 """
 @author: Twitch Chen
@@ -14,7 +14,6 @@ import flask_logger
 #插件
 db = SQLAlchemy()
 
-log = flask_logger.Logger()
 
 def create_app():
     app = Flask(__name__)
@@ -25,7 +24,14 @@ def create_app():
 
     #插件注册
     db.init_app(app)
-    log.init_app(app,config=config[env].LOG_CONFIG)
+
+    #log
+    handler = logging.FileHandler(config[env].LOG_PATH, encoding='UTF-8')
+    handler.setLevel(config[env].LOG_LEVEL)
+    logging_format = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(filename)s - %(funcName)s - %(lineno)s - %(message)s')
+    handler.setFormatter(logging_format)
+    app.logger.addHandler(handler)
 
     #app注册
     #认证模块
@@ -37,5 +43,8 @@ def create_app():
     #robot
     from app.robot import mod_robot
     app.register_blueprint(mod_robot)
+    #wx
+    from app.wx_api import mod_wx
+    app.register_blueprint(mod_wx)
 
     return app

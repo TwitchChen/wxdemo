@@ -37,13 +37,16 @@ class GetWxToken(object):
             else:
                 return None
         except Exception as e:
-            self.app.logger.error("get wx token error: %s" % e)
-            #print("error log")
+            self.app.logger.error("get wx token error: {}".format(e))
             return None
 
     def get_token_from_redis(self):
         key = "wx_token"
-        token = self.redis.get_from_redis(key=key)
+        token = ''
+        try:
+            token = self.redis.get_from_redis(key=key)
+        except Exception as e:
+            self.app.logger.error("redis error,{}".format(e))
         if token:
             self.app.logger.info("get token from redis")
             return token
